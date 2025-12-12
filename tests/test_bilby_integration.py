@@ -9,6 +9,7 @@ def test_sampling_cpnest(
     bilby.run_sampler(
         outdir=outdir,
         label="gaussian_cpnest",
+        sampler="cpnest",
         likelihood=likelihood,
         priors=priors,
         nlive=100,
