@@ -31,7 +31,7 @@ test = [
 [tool.setuptools_scm]
 
 [project.entry-points."bilby.samplers"]
-cpnest = "cpnest_bilby.plugin:Cpnest"
+cpnest = "cpnest_bilby.plugin:CPNest"
 
 [tool.ruff]
 line-length = 79
