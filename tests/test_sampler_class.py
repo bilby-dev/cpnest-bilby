@@ -1,7 +1,7 @@
 import pytest
 from bilby.core.sampler.base_sampler import NestedSampler
 
-from cpnest_bilby.plugin import Cpnest
+from cpnest_bilby.plugin import CPNest
 
 
 @pytest.fixture()
@@ -9,7 +9,7 @@ def create_sampler(bilby_gaussian_likelihood_and_priors, tmp_path):
     likelihood, priors = bilby_gaussian_likelihood_and_priors
 
     def create_fn(**kwargs):
-        return Cpnest(
+        return CPNest(
             likelihood,
             priors,
             outdir=tmp_path / "outdir",
