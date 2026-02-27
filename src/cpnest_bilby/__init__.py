@@ -2,7 +2,7 @@
 
 from importlib.metadata import PackageNotFoundError, version
 
-from .plugin import CPNest
+from .sampler import CPNest
 
 try:
     __version__ = version(__name__)

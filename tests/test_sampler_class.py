@@ -1,7 +1,7 @@
 import pytest
 from bilby.core.sampler.base_sampler import NestedSampler
 
-from cpnest_bilby.plugin import CPNest
+from cpnest_bilby.sampler import CPNest
 
 
 @pytest.fixture()
