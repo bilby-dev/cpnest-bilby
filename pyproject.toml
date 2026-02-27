@@ -5,8 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cpnest-bilby"
 authors = [
-    {name = "Michael J. Williams", email = "michaeljw1@googlemail.com"},
-    {name = "John Veitch", email = "john.veitch@ligo.org"}
+    {name = "Bilby Developers"},
+]
+maintainers = [
+    {name = "Colm Talbot", email = "colm.talbot@ligo.org"},
+    {name = "Michael J. Williams", email = "michael.williams@ligo.org"},
+    {name = "John Veitch", email = "john.veitch@ligo.org"},
 ]
 description = "Plugin for using cpnest with bilby."
 readme = "README.md"
@@ -31,7 +35,7 @@ test = [
 [tool.setuptools_scm]
 
 [project.entry-points."bilby.samplers"]
-cpnest = "cpnest_bilby.plugin:CPNest"
+cpnest = "cpnest_bilby.sampler:CPNest"
 
 [tool.ruff]
 line-length = 79
