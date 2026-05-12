@@ -1,5 +1,6 @@
 import array
 import copy
+import os
 import sys
 
 import numpy as np
@@ -177,9 +178,11 @@ class CPNest(NestedSampler):
         and check resume and checkpoint status.
         """
         if not self.kwargs["output"]:
-            self.kwargs["output"] = f"{self.outdir}/cpnest_{self.label}/"
-        if self.kwargs["output"].endswith("/") is False:
-            self.kwargs["output"] = f"{self.kwargs['output']}/"
+            self.kwargs["output"] = os.path.join(
+                self.outdir, f"cpnest_{self.label}/"
+            )
+        # Ensure the output directory ends with a separator
+        self.kwargs["output"] = os.path.join(self.kwargs["output"], "")
         check_directory_exists_and_if_not_mkdir(self.kwargs["output"])
         if self.kwargs["n_periodic_checkpoint"] and not self.kwargs["resume"]:
             self.kwargs["n_periodic_checkpoint"] = None
