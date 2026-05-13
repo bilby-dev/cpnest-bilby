@@ -1,4 +1,3 @@
-import array
 import copy
 import os
 import sys
@@ -8,11 +7,11 @@ from bilby.core.sampler.base_sampler import NestedSampler, signal_wrapper
 from bilby.core.sampler.proposal import JumpProposalCycle, Sample
 from bilby.core.utils import check_directory_exists_and_if_not_mkdir, logger
 from cpnest import CPNest as CPNestSampler
-from cpnest import model as cpmodel
 from cpnest.nest2pos import compute_weights
-from cpnest.parameter import LivePoint
 from numpy.lib.recfunctions import structured_to_unstructured
 from pandas import DataFrame
+
+from .model import Model
 
 
 class CPNest(NestedSampler):
@@ -79,44 +78,13 @@ class CPNest(NestedSampler):
 
     @signal_wrapper
     def run_sampler(self):
-        class Model(cpmodel.Model):
-            """A wrapper class to pass our log_likelihood into cpnest"""
-
-            def __init__(self, names, priors):
-                self.names = names
-                self.priors = priors
-                self._update_bounds()
-
-            @staticmethod
-            def log_likelihood(x, **kwargs):
-                theta = [x[n] for n in self.search_parameter_keys]
-                return self.log_likelihood(theta)
-
-            @staticmethod
-            def log_prior(x, **kwargs):
-                theta = [x[n] for n in self.search_parameter_keys]
-                return self.log_prior(theta)
-
-            def _update_bounds(self):
-                self.bounds = [
-                    [self.priors[key].minimum, self.priors[key].maximum]
-                    for key in self.names
-                ]
-
-            def new_point(self):
-                """Draw a point from the prior"""
-                prior_samples = self.priors.sample()
-                self._update_bounds()
-                point = LivePoint(
-                    self.names,
-                    array.array(
-                        "d", [prior_samples[name] for name in self.names]
-                    ),
-                )
-                return point
-
         self._resolve_proposal_functions()
-        model = Model(self.search_parameter_keys, self.priors)
+        model = Model(
+            names=self.search_parameter_keys,
+            priors=self.priors,
+            bilby_log_likelihood=self.log_likelihood,
+            bilby_log_prior=self.log_prior,
+        )
         out = None
         remove_kwargs = ["proposals", "n_periodic_checkpoint"]
         while out is None:
@@ -179,7 +147,7 @@ class CPNest(NestedSampler):
         """
         if not self.kwargs["output"]:
             self.kwargs["output"] = os.path.join(
-                self.outdir, f"cpnest_{self.label}/"
+                self.outdir, f"cpnest_{self.label}", ""
             )
         # Ensure the output directory ends with a separator
         self.kwargs["output"] = os.path.join(self.kwargs["output"], "")
