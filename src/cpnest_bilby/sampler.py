@@ -179,7 +179,7 @@ class CPNest(NestedSampler):
         """
         if not self.kwargs["output"]:
             self.kwargs["output"] = os.path.join(
-                self.outdir, f"cpnest_{self.label}/"
+                self.outdir, f"cpnest_{self.label}", ""
             )
         # Ensure the output directory ends with a separator
         self.kwargs["output"] = os.path.join(self.kwargs["output"], "")
