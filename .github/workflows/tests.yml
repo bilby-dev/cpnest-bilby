@@ -12,7 +12,8 @@ concurrency:
 
 jobs:
   unittests:
-    name: Unit tests - Python ${{ matrix.python-version }}
+    name: Unit tests - Python ${{ matrix.python-version }} (${{
+      matrix.os }})
 
     strategy:
       fail-fast: false
