@@ -80,10 +80,10 @@ class CPNest(NestedSampler):
     def run_sampler(self):
         self._resolve_proposal_functions()
         model = Model(
-            self.search_parameter_keys,
-            self.priors,
-            self.bilby_log_likelihood,
-            self.bilby_log_prior,
+            names=self.search_parameter_keys,
+            priors=self.priors,
+            bilby_log_likelihood=self.log_likelihood,
+            bilby_log_prior=self.log_prior,
         )
         out = None
         remove_kwargs = ["proposals", "n_periodic_checkpoint"]

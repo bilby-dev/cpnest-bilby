@@ -17,8 +17,6 @@ class Model(BaseCPNestModel):
         The bilby log likelihood function.
     bilby_log_prior: func
         The bilby log prior function.
-    search_parameter_keys: list
-        The keys of the parameters to sample over.
     """
 
     def __init__(
@@ -27,21 +25,19 @@ class Model(BaseCPNestModel):
         priors,
         bilby_log_likelihood=None,
         bilby_log_prior=None,
-        search_parameter_keys=None,
     ):
         self.names = names
         self.priors = priors
         self._update_bounds()
         self.bilby_log_likelihood = bilby_log_likelihood
         self.bilby_log_prior = bilby_log_prior
-        self.search_parameter_keys = search_parameter_keys
 
     def log_likelihood(self, x, **kwargs):
-        theta = [x[n] for n in self.search_parameter_keys]
+        theta = [x[n] for n in self.names]
         return self.bilby_log_likelihood(theta)
 
     def log_prior(self, x, **kwargs):
-        theta = [x[n] for n in self.search_parameter_keys]
+        theta = [x[n] for n in self.names]
         return self.bilby_log_prior(theta)
 
     def _update_bounds(self):
