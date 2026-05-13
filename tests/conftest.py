@@ -23,6 +23,6 @@ def bilby_gaussian_likelihood_and_priors():
     return likelihood, priors
 
 
-@pytest.fixture(params=[1, 2])
+@pytest.fixture(params=[None, 2])
 def n_pool(request):
     return request.param
