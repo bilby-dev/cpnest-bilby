@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from bilby.core.sampler.base_sampler import NestedSampler
 
@@ -36,7 +38,7 @@ def test_default_kwargs(create_sampler):
         poolsize=100,
         nhamiltonian=0,
         resume=True,
-        output=f"{sampler.outdir}/cpnest_{sampler.label}/",
+        output=os.path.join(sampler.outdir, f"cpnest_{sampler.label}", ""),
         proposals=None,
         n_periodic_checkpoint=8000,
     )
@@ -54,7 +56,7 @@ def test_translate_kwargs_nlive(create_sampler, npoints_name):
         poolsize=100,
         nhamiltonian=0,
         resume=True,
-        output=f"{sampler.outdir}/cpnest_{sampler.label}/",
+        output=os.path.join(sampler.outdir, f"cpnest_{sampler.label}", ""),
         proposals=None,
         n_periodic_checkpoint=8000,
     )
@@ -72,7 +74,7 @@ def test_translate_kwargs_npool(create_sampler):
         poolsize=100,
         nhamiltonian=0,
         resume=True,
-        output=f"{sampler.outdir}/cpnest_{sampler.label}/",
+        output=os.path.join(sampler.outdir, f"cpnest_{sampler.label}", ""),
         proposals=None,
         n_periodic_checkpoint=8000,
     )
